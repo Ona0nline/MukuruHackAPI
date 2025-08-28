@@ -20,6 +20,8 @@ public class WalletService {
 
     public double sendMoney(double amount, String senderEmail, String receiver){
         Optional<UserDetails> senderDetails = userRepo.findByEmail(senderEmail);
+        Optional<UserDetails> receiverDetails = userRepo.findByName(receiver);
+
 
         if(senderDetails.isPresent()){
 //            Get sender details from the db
@@ -30,32 +32,29 @@ public class WalletService {
 //            Edit their money
             double newBalanceU = UwalletDetails.getBalance() - amount;
             double newDebitValueU = UwalletDetails.getDebit() + amount;
+            UwalletDetails.setBalance(newBalanceU);
+            UwalletDetails.setDebit(newDebitValueU);
 //            Save new wallet details
-            var newWalletDetails = WalletDetails.builder()
-                    .balance(newBalanceU)
-                    .debit(newDebitValueU).build();
-
-            walletRepo.save(newWalletDetails);
+            walletRepo.save(UwalletDetails);
 //            POINTS INCREASING LOGIC
 
             //            Get sender details from the db
-            UserDetails receiverUserDetails = senderDetails.get();
+            UserDetails receiverUserDetails = receiverDetails.get();
 //            Get their wallet details from db
             WalletDetails RwalletDetails = walletRepo.findByUserId(receiverUserDetails.getId());
 //            Edit their money
             double newBalanceR = RwalletDetails.getBalance() + amount;
-            double newDebitValueR = RwalletDetails.getCredit() + amount;
-//            Save new wallet details
-            var newWalletDetailsR = WalletDetails.builder()
-                    .balance(newBalanceR)
-                    .debit(newDebitValueR).build();
+            double newCreditValueR = RwalletDetails.getCredit() + amount;
 
-            walletRepo.save(newWalletDetailsR);
+            RwalletDetails.setBalance(newBalanceR);
+            RwalletDetails.setCredit(newCreditValueR);
+//            Save new wallet details
+            walletRepo.save(RwalletDetails);
 
 
         }
 
-        return 0.0;
+        return 10.0;
 
     }
 
