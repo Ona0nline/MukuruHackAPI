@@ -5,6 +5,8 @@ import mukuruRewards.example.mukuru_solutions.dataTransferObjects.SignUpDTO;
 import mukuruRewards.example.mukuru_solutions.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,11 +14,16 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity<?> signup(SignUpDTO signUpDTO){
-        return ResponseEntity.ok(userService.login(signUpDTO.getEmail(), signUpDTO.getPassword()));
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody SignUpDTO signUpDTO){
+        return ResponseEntity.ok(userService.signup(signUpDTO));
     }
 
-    public ResponseEntity<?> login(LoginDTO loginDTO){
-        return ResponseEntity.ok(userService.login(loginDTO.getEmail(), loginDTO.getPassword()));
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
+        if(userService.login(loginDTO.getEmail(), loginDTO.getPassword())){
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(403).build();
     }
 }
