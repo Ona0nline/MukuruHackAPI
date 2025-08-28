@@ -7,15 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepo userRepo;
 
+
     public boolean login(String email, String password){
-        UserDetails databaseUserDetails = userRepo.findByEmail(email);
-        return Objects.equals(databaseUserDetails.getPassword(), password);
+        Optional<UserDetails> databaseUserDetails = userRepo.findByEmail(email);
+        if(databaseUserDetails.isPresent()){
+            return Objects.equals(databaseUserDetails.get().getPassword(), password);
+        }
+        return false;
+
     }
 
     public SignUpDTO signup(SignUpDTO signUpDTO) {

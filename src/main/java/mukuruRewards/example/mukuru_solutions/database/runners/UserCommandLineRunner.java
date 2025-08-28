@@ -17,16 +17,16 @@ public class UserCommandLineRunner implements CommandLineRunner {
     private static List<UserDetails> userDetails = new ArrayList<>();
 
     static {
-        userDetails.add(new UserDetails("Lebogang Aphane", "leaphane@gmail.com", 1));
-        userDetails.add(new UserDetails("Naledi Khumalo", "naledi.khumalo@gmail.com", 2));
-        userDetails.add(new UserDetails("Sibusiso Mokoena", "sibusiso.mokoena@gmail.com", 3));
-        userDetails.add(new UserDetails("Thandiwe Dlamini", "thandiwe.dlamini@gmail.com", 4));
-        userDetails.add(new UserDetails("Kgosi Molefe", "kgosi.molefe@gmail.com", 5));
-        userDetails.add(new UserDetails("Zanele Nkosi", "zanele.nkosi@gmail.com", 6));
-        userDetails.add(new UserDetails("Bongani Shabalala", "bongani.shabalala@gmail.com", 7));
-        userDetails.add(new UserDetails("Lerato Mahlangu", "lerato.mahlangu@gmail.com", 8));
-        userDetails.add(new UserDetails("Mpho Sebe", "mpho.sebe@gmail.com", 9));
-        userDetails.add(new UserDetails("Karabo Radebe", "karabo.radebe@gmail.com", 10));
+        userDetails.add(new UserDetails("Lebogang Aphane", "leaphane@gmail.com", "password5$$L"));
+        userDetails.add(new UserDetails("Naledi Khumalo", "naledi.khumalo@gmail.com", "KJDKJ&&76gshc"));
+        userDetails.add(new UserDetails("Sibusiso Mokoena", "sibusiso.mokoena@gmail.com", "fjdjf88%%22"));
+        userDetails.add(new UserDetails("Thandiwe Dlamini", "thandiwe.dlamini@gmail.com", "jfkNN88&&"));
+        userDetails.add(new UserDetails("Kgosi Molefe", "kgosi.molefe@gmail.com", "ll((99yy"));
+        userDetails.add(new UserDetails("Zanele Nkosi", "zanele.nkosi@gmail.com", "LLpp00##fd"));
+        userDetails.add(new UserDetails("Bongani Shabalala", "bongani.shabalala@gmail.com", "NNkk55%%sds"));
+        userDetails.add(new UserDetails("Lerato Mahlangu", "lerato.mahlangu@gmail.com", "fdfKKJD88&^&"));
+        userDetails.add(new UserDetails("Mpho Sebe", "mpho.sebe@gmail.com", "flk::djdjIDID99"));
+        userDetails.add(new UserDetails("Karabo Radebe", "karabo.radebe@gmail.com", "efijLDKL998**"));
     }
 
 

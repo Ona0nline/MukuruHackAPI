@@ -19,15 +19,14 @@ public class UserDetails {
     private String name;
     private String password;
     private String email;
-    private int wallet_id;
 
     public UserDetails() {
 
     }
 
-    public UserDetails(String name, String email, int wallet_id){
+    public UserDetails(String name, String email, String password){
         this.name = name;
         this.email = email;
-        this.wallet_id = wallet_id;
+        this.password = password;
     }
 }
