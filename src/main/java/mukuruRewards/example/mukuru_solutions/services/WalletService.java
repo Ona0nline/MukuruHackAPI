@@ -1,6 +1,7 @@
 package mukuruRewards.example.mukuru_solutions.services;
 
 import jakarta.transaction.Transactional;
+import mukuruRewards.example.mukuru_solutions.dataTransferObjects.WalletResponseDTO;
 import mukuruRewards.example.mukuru_solutions.database.details.UserDetails;
 import mukuruRewards.example.mukuru_solutions.database.details.WalletDetails;
 import mukuruRewards.example.mukuru_solutions.database.repos.UserRepo;
@@ -19,8 +20,9 @@ public class WalletService {
     @Autowired
     private UserRepo userRepo;
 
+//    Very nb for transactions in db
     @Transactional
-    public double sendMoney(double amount, String senderEmail, String receiver){
+    public WalletResponseDTO sendMoney(double amount, String senderEmail, String receiver){
         Optional<UserDetails> senderDetails = userRepo.findByEmail(senderEmail);
         Optional<UserDetails> receiverDetails = userRepo.findByName(receiver);
 
@@ -28,17 +30,18 @@ public class WalletService {
         if(senderDetails.isPresent()){
 
             UserDetails senderuserDetails = senderDetails.get();
-            WalletDetails UwalletDetails = walletRepo.findByUserId(senderuserDetails.getId());
-            System.out.println(UwalletDetails.getId());
+            WalletDetails senderWalletDetails = walletRepo.findByUserId(senderuserDetails.getId());
+            System.out.println(senderWalletDetails.getId());
 
-            double newBalanceU = UwalletDetails.getNewBalance() - amount;
-            double newDebitValueU = UwalletDetails.getDebit() + amount;
-            UwalletDetails.setNewBalance(newBalanceU);
-            UwalletDetails.setDebit(newDebitValueU);
+            double newBalanceU = senderWalletDetails.getNewBalance() - amount;
+            double newDebitValueU = senderWalletDetails.getDebit() + amount;
+            double prev_balance = senderWalletDetails.getBalance();
+            senderWalletDetails.setNewBalance(newBalanceU);
+            senderWalletDetails.setDebit(newDebitValueU);
 
 
-            walletRepo.save(UwalletDetails);
-            System.out.println("Are we there yet?!");
+            walletRepo.save(senderWalletDetails);
+
 //            POINTS INCREASING LOGIC
 
             //            Get sender details from the db
@@ -52,9 +55,12 @@ public class WalletService {
 
             walletRepo.save(RwalletDetails);
 
+            return new WalletResponseDTO(receiver,amount, senderWalletDetails.getCredit(), senderWalletDetails.getDebit(), prev_balance, senderWalletDetails.getNewBalance() );
+
         }
 
-        return amount;
+        return new WalletResponseDTO();
+
 
     }
 
