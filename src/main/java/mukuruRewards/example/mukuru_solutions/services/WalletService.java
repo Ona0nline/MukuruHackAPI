@@ -1,5 +1,6 @@
 package mukuruRewards.example.mukuru_solutions.services;
 
+import jakarta.transaction.Transactional;
 import mukuruRewards.example.mukuru_solutions.database.details.UserDetails;
 import mukuruRewards.example.mukuru_solutions.database.details.WalletDetails;
 import mukuruRewards.example.mukuru_solutions.database.repos.UserRepo;
@@ -18,12 +19,14 @@ public class WalletService {
     @Autowired
     private UserRepo userRepo;
 
+    @Transactional
     public double sendMoney(double amount, String senderEmail, String receiver){
         Optional<UserDetails> senderDetails = userRepo.findByEmail(senderEmail);
         Optional<UserDetails> receiverDetails = userRepo.findByName(receiver);
 
 
         if(senderDetails.isPresent()){
+
             UserDetails senderuserDetails = senderDetails.get();
             WalletDetails UwalletDetails = walletRepo.findByUserId(senderuserDetails.getId());
             System.out.println(UwalletDetails.getId());
@@ -33,7 +36,9 @@ public class WalletService {
             UwalletDetails.setNewBalance(newBalanceU);
             UwalletDetails.setDebit(newDebitValueU);
 
+
             walletRepo.save(UwalletDetails);
+            System.out.println("Are we there yet?!");
 //            POINTS INCREASING LOGIC
 
             //            Get sender details from the db
