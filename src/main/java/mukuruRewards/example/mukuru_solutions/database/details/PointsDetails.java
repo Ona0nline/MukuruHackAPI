@@ -18,11 +18,17 @@ public class PointsDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int points;
+    private int pointsBalance;
+    private int credit;
+    private int debit;
+    private int newPointsBalance;
     private int user_id;
 
-    public PointsDetails(int points, int user_id) {
-        this.points = points;
+    public PointsDetails(int points, int credit, int debit, int newPointsBalance, int user_id) {
+        this.pointsBalance = points;
+        this.credit = credit;
+        this.debit = debit;
+        this.newPointsBalance = newPointsBalance;
         this.user_id = user_id;
     }
 
