@@ -32,7 +32,9 @@ public class UserCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        userRepo.deleteAll(userDetails);
-        userRepo.saveAll(userDetails);
+        if (userRepo.count() == 0) {
+            // Save demo data only when the db is empty
+            userRepo.saveAll(userDetails);
+        }
     }
 }

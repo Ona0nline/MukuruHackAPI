@@ -27,7 +27,9 @@ public class WalletCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        walletRepo.deleteAll();
-        walletRepo.saveAll(walletDetails);
+        if (walletRepo.count() == 0) {
+            // Save demo data only when the db is empty
+            walletRepo.saveAll(walletDetails);
+        }
     }
 }
