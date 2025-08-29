@@ -24,33 +24,28 @@ public class WalletService {
 
 
         if(senderDetails.isPresent()){
-//            Get sender details from the db
             UserDetails senderuserDetails = senderDetails.get();
-//            Get their wallet details from db
             WalletDetails UwalletDetails = walletRepo.findByUserId(senderuserDetails.getId());
             System.out.println(UwalletDetails.getId());
-//            Edit their money
-            double newBalanceU = UwalletDetails.getBalance() - amount;
+
+            double newBalanceU = UwalletDetails.getNewBalance() - amount;
             double newDebitValueU = UwalletDetails.getDebit() + amount;
-            UwalletDetails.setBalance(newBalanceU);
+            UwalletDetails.setNewBalance(newBalanceU);
             UwalletDetails.setDebit(newDebitValueU);
-//            Save new wallet details
+
             walletRepo.save(UwalletDetails);
 //            POINTS INCREASING LOGIC
 
             //            Get sender details from the db
             UserDetails receiverUserDetails = receiverDetails.get();
-//            Get their wallet details from db
             WalletDetails RwalletDetails = walletRepo.findByUserId(receiverUserDetails.getId());
-//            Edit their money
             double newBalanceR = RwalletDetails.getBalance() + amount;
             double newCreditValueR = RwalletDetails.getCredit() + amount;
 
             RwalletDetails.setBalance(newBalanceR);
             RwalletDetails.setCredit(newCreditValueR);
-//            Save new wallet details
-            walletRepo.save(RwalletDetails);
 
+            walletRepo.save(RwalletDetails);
 
         }
 
