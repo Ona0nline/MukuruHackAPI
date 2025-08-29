@@ -31,6 +31,7 @@ public class UserResource {
     @CrossOrigin(origins = "http://127.0.0.1:5501")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
         if(userService.login(loginDTO.getEmail(), loginDTO.getPassword())){
+            session.setAttribute("email", loginDTO.getEmail());
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(403).build();
